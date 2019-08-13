@@ -3,7 +3,7 @@ from tflearn.layers.conv import global_avg_pool
 from tensorflow.contrib.layers import batch_norm, flatten
 from tensorflow.contrib.layers import xavier_initializer
 from tensorflow.contrib.framework import arg_scope
-from cifar10 import *
+from data_provider.cifar10 import *
 
 # Hyperparameter
 growth_k = 24
