@@ -7,10 +7,11 @@ import pickle
 import random
 import numpy as np
 
-class_num = 10
+class_num = 100
 image_size = 32
 img_channels = 3
 
+dataset_type = 'cifar-100'
 
 # ========================================================== #
 # ├─ prepare_data()
@@ -71,8 +72,12 @@ def unpickle(file):
 
 def load_data_one(file):
     batch = unpickle(file)
-    data = batch[b'data']
-    labels = batch[b'labels']
+    if dataset_type == 'cifar-10':
+        data = batch[b'data']
+        labels = batch[b'labels']
+    else:
+        data = batch[b'data']
+        labels = batch[b'fine_labels']
     print("Loading %s : %d." % (file, len(data)))
     return data, labels
 
@@ -90,7 +95,7 @@ def load_data(files, data_dir, label_count):
     return data, labels
 
 
-def prepare_data():
+def prepare_data_cifar10():
     print("======Loading data======")
     download_data()
     data_dir = './cifar-10-batches-py'
@@ -114,6 +119,34 @@ def prepare_data():
     print("======Prepare Finished======")
 
     return train_data, train_labels, test_data, test_labels
+
+def prepare_data_cifar100():
+    print("======Loading data======")
+
+
+    download_data()
+    data_dir = './cifar-100-python'
+    image_dim = image_size * image_size * img_channels
+    meta = unpickle(data_dir + '/meta')
+
+    fine_label_names = meta[b'fine_label_names']
+    fine_label_count = len(fine_label_names)
+
+    train_data, train_labels = load_data(['train'], data_dir, fine_label_count)
+    test_data, test_labels = load_data(['test'], data_dir, fine_label_count)
+
+    print("Train data:", np.shape(train_data), np.shape(train_labels))
+    print("Test data :", np.shape(test_data), np.shape(test_labels))
+    print("======Load finished======")
+
+    print("======Shuffling data======")
+    indices = np.random.permutation(len(train_data))
+    train_data = train_data[indices]
+    train_labels = train_labels[indices]
+    print("======Prepare Finished======")
+
+    return train_data, train_labels, test_data, test_labels
+
 
 
 # ========================================================== #

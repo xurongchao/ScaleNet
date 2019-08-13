@@ -216,7 +216,7 @@ class DenseNet():
 
 
 if __name__ == '__main__':
-    train_x, train_y, test_x, test_y = prepare_data()
+    train_x, train_y, test_x, test_y = prepare_data_cifar100()
     train_x, test_x = color_preprocessing(train_x, test_x)
 
     # image_size = 32, img_channels = 3, class_num = 10 in cifar10
