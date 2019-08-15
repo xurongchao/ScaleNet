@@ -1,0 +1,39 @@
+#DenseNet paras
+growth_k: 24
+nb_block: 3 # how many (dense block + Transition Layer) ?
+nb_layers_order: [6, 12, 48, 32]
+#choices: nb_layers_121 = [6, 12, 24, 16] # how many bottlenecks in each dense block
+#         nb_layers_169 = [6, 12, 32, 32]
+#         nb_layers_201 = [6, 12, 48, 32]
+#         nb_layers_264 = [6, 12, 64, 48]
+
+
+#train
+init_learning_rate: 0.01 #convert 1e-4 to 0.0001
+epsilon: 0.0001 # AdamOptimizer epsilon
+dropout_rate: 0.2
+nesterov_momentum: 0.9
+weight_decay: 0.0001
+batch_size: 64
+iteration: 782
+test_iteration: 10
+total_epochs: 300
+
+lr_decay_point: [0.5, 0.75]
+optimizer: 'Adam'  # 'Momentum' 'Adam' ''
+
+#test
+test_mode: False #if just test with checkpoint
+
+#save
+checkpoint: 'model-2/'
+logs: 'output/logs-2/'
+summary: 'output/summary/summary-2.txt'
+
+
+#data
+class_num: 100
+image_size: 32
+img_channels: 3
+dataset_type: 'cifar-100'
+data_dir: 'dataset/cifar-100-python'
